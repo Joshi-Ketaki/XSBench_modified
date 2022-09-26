@@ -31,39 +31,39 @@ SimulationData move_simulation_data_to_device( Inputs in, int mype, SimulationDa
 
 	// Move data to GPU memory space
 	sz = GSD.length_num_nucs * sizeof(int);
-	gpuErrchk( cudaMalloc((void **) &GSD.num_nucs, sz) );
+	gpuErrchk( cudaMallocManaged((void **) &GSD.num_nucs, sz) );
 	gpuErrchk( cudaMemcpy(GSD.num_nucs, SD.num_nucs, sz, cudaMemcpyHostToDevice) );
 	total_sz += sz;
 
 	sz = GSD.length_concs * sizeof(double);
-	gpuErrchk( cudaMalloc((void **) &GSD.concs, sz) );
+	gpuErrchk( cudaMallocManaged((void **) &GSD.concs, sz) );
 	gpuErrchk( cudaMemcpy(GSD.concs, SD.concs, sz, cudaMemcpyHostToDevice) );
 	total_sz += sz;
 
 	sz = GSD.length_mats * sizeof(int);
-	gpuErrchk( cudaMalloc((void **) &GSD.mats, sz) );
+	gpuErrchk( cudaMallocManaged((void **) &GSD.mats, sz) );
 	gpuErrchk( cudaMemcpy(GSD.mats, SD.mats, sz, cudaMemcpyHostToDevice) );
 	total_sz += sz;
 	
 	sz = GSD.length_unionized_energy_array * sizeof(double);
-	gpuErrchk( cudaMalloc((void **) &GSD.unionized_energy_array, sz) );
+	gpuErrchk( cudaMallocManaged((void **) &GSD.unionized_energy_array, sz) );
 	gpuErrchk( cudaMemcpy(GSD.unionized_energy_array, SD.unionized_energy_array, sz, cudaMemcpyHostToDevice) );
 	total_sz += sz;
 
 	sz = GSD.length_index_grid * sizeof(int);
-	gpuErrchk( cudaMalloc((void **) &GSD.index_grid, sz) );
+	gpuErrchk( cudaMallocManaged((void **) &GSD.index_grid, sz) );
 	gpuErrchk( cudaMemcpy(GSD.index_grid, SD.index_grid, sz, cudaMemcpyHostToDevice) );
 	total_sz += sz;
 
 	sz = GSD.length_nuclide_grid * sizeof(NuclideGridPoint);
-	gpuErrchk( cudaMalloc((void **) &GSD.nuclide_grid, sz) );
+	gpuErrchk( cudaMallocManaged((void **) &GSD.nuclide_grid, sz) );
 	gpuErrchk( cudaMemcpy(GSD.nuclide_grid, SD.nuclide_grid, sz, cudaMemcpyHostToDevice) );
 	total_sz += sz;
 	
 	// Allocate verification array on device. This structure is not needed on CPU, so we don't
 	// have to copy anything over.
 	sz = in.lookups * sizeof(unsigned long);
-	gpuErrchk( cudaMalloc((void **) &GSD.verification, sz) );
+	gpuErrchk( cudaMallocManaged((void **) &GSD.verification, sz) );
 	total_sz += sz;
 	GSD.length_verification = in.lookups;
 	
